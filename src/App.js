@@ -1,34 +1,37 @@
-import logo from './logo.svg';
 import './App.css';
 
 function App() {
 	function Header(props) {
 		return (
-			<nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-				<div className="container-fluid">
-					<a className="navbar-brand" href="/">
-						{props.title}
-					</a>
-					<button
-						className="navbar-toggler"
-						type="button"
-						data-bs-toggle="collapse"
-						data-bs-target="#navbarSupportedContent"
-						aria-controls="navbarSupportedContent"
-						aria-expanded="false"
-						aria-label="Toggle navigation"
-					>
-						<span className="navbar-toggler-icon" />
-					</button>
-					<div className="collapse navbar-collapse" id="navbarSupportedContent">
-						<ul className="navbar-nav me-auto mb-2 mb-lg-0">
-							{/* <li className="nav-item">
+			<header>
+				<nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+					<div className="container-fluid">
+						<a className="navbar-brand" href="/">
+							{props.title}
+						</a>
+						<button
+							className="navbar-toggler"
+							type="button"
+							data-bs-toggle="collapse"
+							data-bs-target="#navbarSupportedContent"
+							aria-controls="navbarSupportedContent"
+							aria-expanded="false"
+							aria-label="Toggle navigation"
+						>
+							<span className="navbar-toggler-icon" />
+						</button>
+						<div
+							className="collapse navbar-collapse"
+							id="navbarSupportedContent"
+						>
+							<ul className="navbar-nav me-auto mb-2 mb-lg-0">
+								{/* <li className="nav-item">
 								<a className="nav-link active" aria-current="page" href="/">
 									Home
 								</a>
 							</li> */}
-						</ul>
-						{/* <form className="d-flex" role="search">
+							</ul>
+							{/* <form className="d-flex" role="search">
 							<input
 								className="form-control me-2"
 								type="search"
@@ -39,17 +42,21 @@ function App() {
 								Search
 							</button>
 						</form> */}
+						</div>
 					</div>
-				</div>
-			</nav>
+				</nav>
+			</header>
 		);
 	}
 
 	function SectionStarts() {
 		return (
-			<div className="container">
-				<Cards />
-			</div>
+			<section>
+				<div className="container d-flex flex-wrap">
+					<Cards />
+					<Cards />
+				</div>
+			</section>
 		);
 	}
 
@@ -57,14 +64,14 @@ function App() {
 		return (
 			<div className="container my-3 mx-3">
 				<div className="card" style={{ width: '18rem' }}>
-					<img src="..." className="card-img-top" alt="..." />
-					<div className="card-body">
+					{/* <img src="..." className="card-img-top" alt="..." /> */}
+					<div className="card-body " id="cardBody">
 						<h5 className="card-title">Card title</h5>
 						<p className="card-text">
 							Some quick example text to build on the card title and make up the
 							bulk of the card's content.
 						</p>
-						<a href="/" className="btn btn-primary">
+						<a href="/" className="btn btn-dark">
 							Go somewhere
 						</a>
 					</div>
@@ -73,10 +80,28 @@ function App() {
 		);
 	}
 
+	function Footer() {
+		return (
+			<footer className="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top bg-black">
+				<p className="col-md-4 mb-0 text-muted">© 2021 Company, Inc</p>
+				<a
+					href="/"
+					className="col-md-4 d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none"
+				>
+					<svg className="bi me-2" width={40} height={32}>
+						<use xlinkHref="#bootstrap" />
+					</svg>
+				</a>
+			</footer>
+		);
+	}
+
+	//NOTE: here main function in which all other functions are derived
 	return (
 		<div>
 			<Header title="BasicsPractice" />
 			<SectionStarts />
+			<Footer />
 		</div>
 	);
 }
