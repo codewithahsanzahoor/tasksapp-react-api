@@ -1,3 +1,14 @@
 #cardBody {
 	background-color: #b1d8e7;
 }
+
+#tasks {
+	height: 65vh;
+	width: 100vw;
+}
+
+#task {
+	height: 115px;
+	width: 233px;
+	background-color: aquamarine;
+}

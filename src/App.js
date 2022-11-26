@@ -2,6 +2,35 @@ import './App.css';
 import Footer from './components/Footer';
 import Header from './components/Header';
 import MainSection from './components/MainSection';
+import Tasks from './components/Tasks';
+
+const list = [
+	{
+		id: '1',
+		name: 'ahsanZahoor',
+		day: 'Monday',
+	},
+	{
+		id: '2',
+		name: 'aliRaza',
+		day: 'Tuesday',
+	},
+	{
+		id: '3',
+		name: 'ahmad',
+		day: 'Wednesday',
+	},
+	{
+		id: '4',
+		name: 'aliAhmad',
+		day: 'Thursday',
+	},
+	{
+		id: '5',
+		name: 'NoorAli',
+		day: 'Friday',
+	},
+];
 
 function App() {
 	//NOTE: one way to apply style to your html in jsx is using {styleObj}=>{it is only good for using dynamic styling means when some event happens on screen some content dynamically changes} and other one is using a css file
@@ -105,11 +134,17 @@ function App() {
 
 	//NOTE: here main function in which all other functions are derived
 	return (
-		<div>
+		<>
 			<Header title="BasicsPractice" heading="Ahsan" />
-			<MainSection />
-			<Footer />
-		</div>
+			{/* <MainSection /> */}
+			{/* <Footer /> */}
+			{/* <div className="container">
+				{list.map((listItem) => {
+					return <h3 key={listItem.id}>{listItem.name}</h3>;
+				})}
+			</div> */}
+			<Tasks tasks={list} />
+		</>
 	);
 }
 

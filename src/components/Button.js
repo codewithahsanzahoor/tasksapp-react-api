@@ -1,6 +1,6 @@
 const Button = ({ color, message }) => {
 	return (
-		<button type="button" class={`btn btn-${color}`}>
+		<button type="button" className={`btn btn-${color}`}>
 			{message}
 		</button>
 	);
