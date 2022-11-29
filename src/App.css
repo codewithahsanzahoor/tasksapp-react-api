@@ -8,7 +8,11 @@
 }
 
 #task {
-	height: 115px;
+	height: 163px;
 	width: 233px;
 	background-color: aquamarine;
+}
+
+.upperBorder {
+	border-top: 2px solid red;
 }

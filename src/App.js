@@ -1,38 +1,65 @@
+import { useState } from 'react';
 import './App.css';
+import AddTask from './components/AddTask';
 import Footer from './components/Footer';
 import Header from './components/Header';
 import MainSection from './components/MainSection';
+import task from './components/Task';
 import Tasks from './components/Tasks';
 
-const list = [
-	{
-		id: '1',
-		name: 'ahsanZahoor',
-		day: 'Monday',
-	},
-	{
-		id: '2',
-		name: 'aliRaza',
-		day: 'Tuesday',
-	},
-	{
-		id: '3',
-		name: 'ahmad',
-		day: 'Wednesday',
-	},
-	{
-		id: '4',
-		name: 'aliAhmad',
-		day: 'Thursday',
-	},
-	{
-		id: '5',
-		name: 'NoorAli',
-		day: 'Friday',
-	},
-];
-
 function App() {
+	const [tasks, settasks] = useState([
+		{
+			id: '1',
+			name: 'ahsanZahoor',
+			day: 'Monday',
+			reminder: true,
+		},
+		{
+			id: '2',
+			name: 'aliRaza',
+			day: 'Tuesday',
+			reminder: true,
+		},
+		{
+			id: '3',
+			name: 'ahmad',
+			day: 'Wednesday',
+			reminder: true,
+		},
+		{
+			id: '4',
+			name: 'aliAhmad',
+			day: 'Thursday',
+			reminder: true,
+		},
+		{
+			id: '5',
+			name: 'NoorAli',
+			day: 'Friday',
+			reminder: true,
+		},
+	]);
+
+	//NOTE: you can make a function in one file {component} and when you want to move this function or Anything other thing from one place to another you can use props
+	const onDelete = (id) => {
+		// console.log(`on delete function is clicked with id, ${id}`);
+		settasks(tasks.filter((task) => task.id !== id));
+	};
+
+	const toggleReminder = (id) => {
+		// console.log(id);
+		settasks(
+			tasks.map((task) =>
+				task.id === id ? { ...task, reminder: !task.reminder } : task
+			)
+		);
+	};
+
+	const addTask = (task) => {
+		console.log(task);
+	};
+
 	//NOTE: one way to apply style to your html in jsx is using {styleObj}=>{it is only good for using dynamic styling means when some event happens on screen some content dynamically changes} and other one is using a css file
 	// const cardStyle = {
 	// 	backgroundColor: '#b1d8e7',
@@ -143,7 +170,17 @@ function App() {
 					return <h3 key={listItem.id}>{listItem.name}</h3>;
 				})}
 			</div> */}
-			<Tasks tasks={list} />
+
+			<AddTask onAdd={addTask} />
+			{tasks.length > 0 ? (
+				<Tasks
+					tasks={tasks}
+					onDelete={onDelete}
+					toggleReminder={toggleReminder}
+				/>
+			) : (
+				<p style={{ textAlign: 'center', color: 'red' }}>No Tasks To Show</p>
+			)}
 		</>
 	);
 }
