@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './App.css';
 import AddTask from './components/AddTask';
 import Footer from './components/Footer';
@@ -107,66 +107,115 @@ function App() {
 	// 	);
 	// }
 
-	const [tasks, settasks] = useState([
-		{
-			id: '1',
-			text: 'ahsanZahoor',
-			day: 'Monday',
-			reminder: true,
-		},
-		{
-			id: '2',
-			text: 'aliRaza',
-			day: 'Tuesday',
-			reminder: true,
-		},
-		{
-			id: '3',
-			text: 'ahmad',
-			day: 'Wednesday',
-			reminder: true,
-		},
-		{
-			id: '4',
-			text: 'aliAhmad',
-			day: 'Thursday',
-			reminder: true,
-		},
-		{
-			id: '5',
-			text: 'NoorAli',
-			day: 'Friday',
-			reminder: true,
-		},
-	]);
+	// const [tasks, settasks] = useState([
+	// 	{
+	// 		id: '1',
+	// 		text: 'ahsanZahoor',
+	// 		day: 'Monday',
+	// 		reminder: true,
+	// 	},
+	// 	{
+	// 		id: '2',
+	// 		text: 'aliRaza',
+	// 		day: 'Tuesday',
+	// 		reminder: true,
+	// 	},
+	// 	{
+	// 		id: '3',
+	// 		text: 'ahmad',
+	// 		day: 'Wednesday',
+	// 		reminder: true,
+	// 	},
+	// 	{
+	// 		id: '4',
+	// 		text: 'aliAhmad',
+	// 		day: 'Thursday',
+	// 		reminder: true,
+	// 	},
+	// 	{
+	// 		id: '5',
+	// 		text: 'NoorAli',
+	// 		day: 'Friday',
+	// 		reminder: true,
+	// 	},
+	// ]);
+	const [tasks, settasks] = useState([]);
+
+	//NOTE: fetching data from the server: json server
+	useEffect(() => {
+		const getTasks = async () => {
+			const tasksFromServer = await fetchTasks();
+			settasks(tasksFromServer);
+		};
+
+		getTasks();
+	}, []);
+
+	const fetchTasks = async () => {
+		const res = await fetch('http://localhost:5000/tasks');
+		const data = await res.json();
+
+		return data;
+		// console.log(data);
+	};
+
+	const fetchTask = async (id) => {
+		const res = await fetch(`http://localhost:5000/tasks/${id}`);
+		const data = await res.json();
+
+		return data;
+		// console.log(data);
+	};
 
 	const [showAddTask, setShowAddTask] = useState(false);
 
 	//NOTE: you can make a function in one file {component} and when you want to move this function or Anything other thing from one place to another you can use props
-	const onDelete = (id) => {
-		// console.log(`on delete function is clicked with id, ${id}`);
+	const onDelete = async (id) => {
+		await fetch(`http://localhost:5000/tasks/${id}`, {
+			method: 'DELETE',
+		});
+
 		settasks(tasks.filter((task) => task.id !== id));
 	};
 
-	const toggleReminder = (id) => {
+	const toggleReminder = async (id) => {
+		//* data that we want to update:
+		const taskToToggle = await fetchTask(id);
+		const upTask = { ...taskToToggle, reminder: !taskToToggle.reminder };
+
+		const res = await fetch(`http://localhost:5000/tasks/${id}`, {
+			method: 'PUT',
+			headers: { 'Content-type': 'application/json' },
+			body: JSON.stringify(upTask),
+		});
+		const data = await res.json();
+
 		// console.log(id);
 		settasks(
 			tasks.map((task) =>
-				task.id === id ? { ...task, reminder: !task.reminder } : task
+				task.id === id ? { ...task, reminder: data.reminder } : task
 			)
 		);
 	};
 
 	//* Parameter can be anything what you can pass into function:
-	const addTask = (task) => {
+	const addTask = async (task) => {
+		const res = await fetch('http://localhost:5000/tasks', {
+			method: 'POST',
+			headers: { 'Content-type': 'application/json' },
+			body: JSON.stringify(task),
+		});
+		const data = await res.json();
+		settasks([...tasks, data]);
+
 		// console.log(task);
-		//* to generate a random number:
-		//* id is necessary because to in tasks.jsx it needs a unique key
-		const id = Math.floor(Math.random() * 1000000) + 1;
-		//* {task} is a object so we use {} to add id to it.
-		const newTask = { id, ...task };
-		//* [tasks] is a array so we use [] to add id to it.
-		settasks([...tasks, newTask]);
+		// //* to generate a random number:
+		// //* id is necessary because to in tasks.jsx it needs a unique key
+		// const id = Math.floor(Math.random() * 1000000) + 1;
+		// //* {task} is a object so we use {} to add id to it.
+		// const newTask = { id, ...task };
+		// //* [tasks] is a array so we use [] to add id to it.
+		// settasks([...tasks, newTask]);
 		// console.log(tasks);
 	};
 
@@ -218,6 +267,8 @@ function App() {
 			) : (
 				<p style={{ textAlign: 'center', color: 'red' }}>No Tasks To Show</p>
 			)}
+
+			<Footer />
 		</>
 	);
 }
