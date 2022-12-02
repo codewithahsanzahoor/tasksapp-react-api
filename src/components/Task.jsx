@@ -10,11 +10,11 @@ const task = ({ task, onDelete, toggleReminder }) => {
 			}}
 		>
 			<h3>{task.id}</h3>
-			<h3>{task.name}</h3>
+			<h3>{task.text}</h3>
 			<p>{task.day}</p>
 
 			{/* //NOTE: to pass the value to a function for it's parameter we use a function call back. like mention {()=> onDelete(task.id)} */}
-			<button className="btn-primary btn" onClick={() => onDelete(task.id)}>
+			<button className="btn-success btn" onClick={() => onDelete(task.id)}>
 				Delete
 			</button>
 		</div>

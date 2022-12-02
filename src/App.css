@@ -13,6 +13,17 @@
 	background-color: aquamarine;
 }
 
+#task > button {
+	margin: 0px auto;
+	display: block;
+}
+
 .upperBorder {
 	border-top: 2px solid red;
+}
+
+#btnAdd {
+	display: block;
+	margin: 0px auto;
+	width: 94px;
 }

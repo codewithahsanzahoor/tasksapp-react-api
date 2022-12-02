@@ -8,58 +8,6 @@ import task from './components/Task';
 import Tasks from './components/Tasks';
 
 function App() {
-	const [tasks, settasks] = useState([
-		{
-			id: '1',
-			name: 'ahsanZahoor',
-			day: 'Monday',
-			reminder: true,
-		},
-		{
-			id: '2',
-			name: 'aliRaza',
-			day: 'Tuesday',
-			reminder: true,
-		},
-		{
-			id: '3',
-			name: 'ahmad',
-			day: 'Wednesday',
-			reminder: true,
-		},
-		{
-			id: '4',
-			name: 'aliAhmad',
-			day: 'Thursday',
-			reminder: true,
-		},
-		{
-			id: '5',
-			name: 'NoorAli',
-			day: 'Friday',
-			reminder: true,
-		},
-	]);
-
-	//NOTE: you can make a function in one file {component} and when you want to move this function or Anything other thing from one place to another you can use props
-	const onDelete = (id) => {
-		// console.log(`on delete function is clicked with id, ${id}`);
-		settasks(tasks.filter((task) => task.id !== id));
-	};
-
-	const toggleReminder = (id) => {
-		// console.log(id);
-		settasks(
-			tasks.map((task) =>
-				task.id === id ? { ...task, reminder: !task.reminder } : task
-			)
-		);
-	};
-
-	const addTask = (task) => {
-		console.log(task);
-	};
-
 	//NOTE: one way to apply style to your html in jsx is using {styleObj}=>{it is only good for using dynamic styling means when some event happens on screen some content dynamically changes} and other one is using a css file
 	// const cardStyle = {
 	// 	backgroundColor: '#b1d8e7',
@@ -159,6 +107,79 @@ function App() {
 	// 	);
 	// }
 
+	const [tasks, settasks] = useState([
+		{
+			id: '1',
+			text: 'ahsanZahoor',
+			day: 'Monday',
+			reminder: true,
+		},
+		{
+			id: '2',
+			text: 'aliRaza',
+			day: 'Tuesday',
+			reminder: true,
+		},
+		{
+			id: '3',
+			text: 'ahmad',
+			day: 'Wednesday',
+			reminder: true,
+		},
+		{
+			id: '4',
+			text: 'aliAhmad',
+			day: 'Thursday',
+			reminder: true,
+		},
+		{
+			id: '5',
+			text: 'NoorAli',
+			day: 'Friday',
+			reminder: true,
+		},
+	]);
+
+	const [showAddTask, setShowAddTask] = useState(false);
+
+	//NOTE: you can make a function in one file {component} and when you want to move this function or Anything other thing from one place to another you can use props
+	const onDelete = (id) => {
+		// console.log(`on delete function is clicked with id, ${id}`);
+		settasks(tasks.filter((task) => task.id !== id));
+	};
+
+	const toggleReminder = (id) => {
+		// console.log(id);
+		settasks(
+			tasks.map((task) =>
+				task.id === id ? { ...task, reminder: !task.reminder } : task
+			)
+		);
+	};
+
+	//* Parameter can be anything what you can pass into function:
+	const addTask = (task) => {
+		// console.log(task);
+		//* to generate a random number:
+		//* id is necessary because to in tasks.jsx it needs a unique key
+		const id = Math.floor(Math.random() * 1000000) + 1;
+		//* {task} is a object so we use {} to add id to it.
+		const newTask = { id, ...task };
+		//* [tasks] is a array so we use [] to add id to it.
+		settasks([...tasks, newTask]);
+		// console.log(tasks);
+	};
+
+	const [nameList, setNameList] = useState({ name: 'ahsanzahoor', class: '9' });
+
+	//NOTE: this is how we can change a particular object key {particular one or two change key}
+	const changeNameList = () => {
+		setNameList({
+			...changeNameList,
+			name: 'AhsanZahoor',
+		});
+	};
+
 	//NOTE: here main function in which all other functions are derived
 	return (
 		<>
@@ -170,8 +191,24 @@ function App() {
 					return <h3 key={listItem.id}>{listItem.name}</h3>;
 				})}
 			</div> */}
+			{/* <div onDoubleClick={changeNameList}>{nameList.name}</div> */}
 
-			<AddTask onAdd={addTask} />
+			<div
+				className="btn"
+				id="btnAdd"
+				style={
+					showAddTask
+						? { backgroundColor: 'blue', color: 'white' }
+						: { backgroundColor: 'red', color: 'white' }
+				}
+				onClick={() => {
+					setShowAddTask(!showAddTask);
+				}}
+			>
+				{showAddTask ? 'Close' : 'Add'}
+			</div>
+			{/* //* shorter way of doing a ternary operator without an else statement in it */}
+			{showAddTask && <AddTask onAdd={addTask} />}
 			{tasks.length > 0 ? (
 				<Tasks
 					tasks={tasks}

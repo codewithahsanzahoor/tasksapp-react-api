@@ -47,6 +47,8 @@ const AddTask = ({ onAdd }) => {
 						type="checkbox"
 						value={reminder}
 						checked={reminder}
+						//NOTE: if we want to take information from the child component we can take it by passing the props having (arguments inside)and if we want to give information to child then we use props for it.
+						//* here you can see we are using props with arguments to give information to the parents which is {App.js}
 						onChange={(e) => setReminder(e.currentTarget.checked)}
 					/>
 				</div>
