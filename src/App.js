@@ -229,6 +229,13 @@ function App() {
 		});
 	};
 
+	const [num, setNum] = useState(0);
+	const [nums, setNums] = useState(0);
+
+	useEffect(() => {
+		alert('I am clicked!');
+	}, [num]);
+
 	//NOTE: here main function in which all other functions are derived
 	return (
 		<>
@@ -241,6 +248,23 @@ function App() {
 				})}
 			</div> */}
 			{/* <div onDoubleClick={changeNameList}>{nameList.name}</div> */}
+
+			<button
+				className="btn btn-primary"
+				onClick={() => {
+					setNum(num + 1);
+				}}
+			>
+				ClickMe {num}
+			</button>
+			<button
+				className="btn btn-primary mx-2 my-1"
+				onClick={() => {
+					setNums(nums + 1);
+				}}
+			>
+				ClickMe {nums}
+			</button>
 
 			<div
 				className="btn"
